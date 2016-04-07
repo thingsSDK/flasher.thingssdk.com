@@ -1,0 +1,16 @@
+{
+  "options": [
+    {
+      "name": "Espruino",
+      "versions": [
+        {
+          "version": "1v85",
+          "board": "ESP8266",
+          "revision": "ESP12",
+          "manifest": "http://flasher.thingssdk.com/v1/esp8266/esp12/espruino/manifest.json",
+          "latest": true
+        }
+      ]
+    }
+  ]
+}
