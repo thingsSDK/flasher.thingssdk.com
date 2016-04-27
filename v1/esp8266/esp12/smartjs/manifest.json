@@ -8,19 +8,19 @@
   "flash": [
     {
       "address": "0x0000",
-      "path": "0x00000.bin"
+      "path": "smartjs-20160324150833/0x00000.bin"
     },
     {
       "address": "0x1000",
-      "path": "0x01000.bin"
+      "path": "smartjs-20160324150833/0x01000.bin"
     },
     {
       "address": "0xdc000.bin",
-      "path": "0xdc000.bin"
+      "path": "smartjs-20160324150833/0xdc000.bin"
     },
     {
       "address": "0x11000",
-      "path": "0x11000.bin"
+      "path": "smartjs-20160324150833/0x11000.bin"
     }
   ]
 }
