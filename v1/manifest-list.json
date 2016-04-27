@@ -11,6 +11,18 @@
           "latest": true
         }
       ]
+    },
+    {
+      "name": "Smart.js",
+      "versions": [
+        {
+          "version": "Beta 3 \"Fat Rabbit\", 2016-03-24",
+          "board": "ESP8266",
+          "revision": "ESP12",
+          "manifest": "http://flasher.thingssdk.com/v1/esp8266/esp12/smartjs/manifest.json",
+          "latest": true
+        }
+      ]
     }
   ]
 }

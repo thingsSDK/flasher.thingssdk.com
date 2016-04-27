@@ -1,0 +1,26 @@
+{
+  "name": "Smart.js",
+  "version": "Beta 3 \"Fat Rabbit\", 2016-03-24",
+  "board": "ESP8266",
+  "revision": "ESP-12",
+  "description": "Official Binaries for the Smart.js Runtime for the ESP8266 MCU ESP-12",
+  "download": "https://github.com/cesanta/iot/releases/download/beta3/smartjs-esp8266-beta3.zip",
+  "flash": [
+    {
+      "address": "0x0000",
+      "path": "0x00000.bin"
+    },
+    {
+      "address": "0x1000",
+      "path": "0x01000.bin"
+    },
+    {
+      "address": "0xdc000.bin",
+      "path": "0xdc000.bin"
+    },
+    {
+      "address": "0x11000",
+      "path": "0x11000.bin"
+    }
+  ]
+}
