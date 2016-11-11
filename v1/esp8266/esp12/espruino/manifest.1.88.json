@@ -1,26 +1,26 @@
 {
   "name": "Espruino",
-  "version": "1v87",
+  "version": "1v88",
   "board": "ESP8266",
   "revision": "ESP-12",
   "description": "Official Binaries for the Espruino Runtime for the ESP8266 MCU ESP-12",
-  "download": "http://www.espruino.com/files/espruino_1v87.zip",
+  "download": "http://www.espruino.com/files/espruino_1v88.zip",
   "flash": [
     {
       "address": "0x0000",
-      "path": "espruino_1v87_esp8266/boot_v1.4(b1).bin"
+      "path": "espruino_1v88_esp8266/boot_v1.6.bin"
     },
     {
       "address": "0x1000",
-      "path": "espruino_1v87_esp8266/espruino_esp8266_user1.bin"
+      "path": "espruino_1v88_esp8266/espruino_esp8266_user1.bin"
     },
     {
       "address": "0x3FC000",
-      "path": "espruino_1v87_esp8266/esp_init_data_default.bin"
+      "path": "espruino_1v88_esp8266/esp_init_data_default.bin"
     },
     {
       "address": "0x3FE000",
-      "path": "espruino_1v87_esp8266/blank.bin"
+      "path": "espruino_1v88_esp8266/blank.bin"
     }
   ]
 }
