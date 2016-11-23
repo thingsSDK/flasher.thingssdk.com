@@ -1,0 +1,14 @@
+{
+    "name": "MicroPython",
+    "version": "1.8.6",
+    "board": "ESP8266",
+    "revision": "ESP-12",
+    "description": "Official Binaries for the Micropython Runtime for the ESP8266 MCU ESP-12",
+    "download": "http://micropython.org/resources/firmware/esp8266-20161110-v1.8.6.bin",
+    "flash": [
+        {
+            "address": "0x0000",
+            "path": "esp8266-20161110-v1.8.6.bin"
+        }
+    ]
+}
