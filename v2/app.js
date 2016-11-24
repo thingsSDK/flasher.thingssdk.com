@@ -3,13 +3,20 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var routes = require('./routes');
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Connect to DB
+const mongoose = require('mongoose');
+const uri = `mongodb://localhost:27017/flasher_thingssdk_${app.get('env')}`;
+mongoose.connect(uri);
+const db = mongoose.connection;
+db.on("error", err => console.error("connection error:", err));
 
 app.use('/', routes);
 
