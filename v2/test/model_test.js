@@ -16,11 +16,8 @@ before(done => {
 });
 
 after(done => {
-  if (mongoose.connection.readyState !== 0) {
-    mongoose.connection.close(() => { done() })
-  } else {
-    done();
-  }
+  mongoose.connection.close()
+    .then(() => { done() });
 });
 
 beforeEach(done => { removeAll(done) });

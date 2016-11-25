@@ -1,13 +1,41 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Manifest = require('../models').Manifest;
 const manifestList = require('../flat/manifest-list.json');
+const port = process.env.PORT || 3000;
+const url = process.env.URL || `http://localhost:${port}`;
 
-router.param('version', (req, res, next, m) => {
-  next();
-})
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.json(manifestList);
+  Manifest.find({})
+    .sort('-name')
+    .exec()
+    .then(list => {
+      const result = {options:[]};
+      list.reduce((options, manifest) => {
+        const { version, board, revision, name } = manifest;
+        const listInfo = {
+          version: version,
+          board: board,
+          revision: revision,
+          manifest: `${url}/v2/${board}/${revision.replace('-','')}/${name}/HOW-TO-REF-THIS-FROM-MANIFEST?`, // http://flasher.thingssdk.com/v1/esp8266/esp12/espruino/manifest.1.88.json,
+          latest: false
+        }
+        const option = options.length ? options[options.length - 1] : null;
+        if (option && option.name === manifest.name) {
+          option.versions.push(listInfo);
+          return options;
+        } else {
+          options.push({
+            name: manifest.name,
+            versions: [listInfo]
+          });
+          return options;
+        }
+      }, result.options);
+      res.json(result);
+    })
+    .catch(err => next(err));
 });
 
 /* GET microcontroller */
