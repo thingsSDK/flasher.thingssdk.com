@@ -11,6 +11,8 @@ before(done => {
   if (mongoose.connection.readyState !== 0) {
     mongoose.connection.close()
       .then(() => mongoose.connect('mongodb://localhost:27017/flasher_thingssdk_test'))
+      // .then(() => Promise.all([5,6,7,8].map(num => new Manifest(require(`../flat/esp8266/esp12/espruino/manifest.1.8${num}.json`)).save())))
+      // .then(()=> new Manifest(require('../flat/esp8266/esp12/smartjs/manifest.json')).save())
       .then(() => done());
   }
 });
