@@ -7,21 +7,6 @@ const Manifest = require('../models').Manifest;
 
 const removeAll = (done) => Manifest.remove({}).then(()=>done());
 
-before(done => {
-  if (mongoose.connection.readyState !== 0) {
-    mongoose.connection.close()
-      .then(() => mongoose.connect('mongodb://localhost:27017/flasher_thingssdk_test'))
-      // .then(() => Promise.all([5,6,7,8].map(num => new Manifest(require(`../flat/esp8266/esp12/espruino/manifest.1.8${num}.json`)).save())))
-      // .then(()=> new Manifest(require('../flat/esp8266/esp12/smartjs/manifest.json')).save())
-      .then(() => done());
-  }
-});
-
-after(done => {
-  mongoose.connection.close()
-    .then(() => { done() });
-});
-
 beforeEach(done => { removeAll(done) });
 afterEach(done => { removeAll(done) });
 
@@ -44,7 +29,7 @@ describe('Manifest model', () => {
   it('must retrieve a manifest', done => {
     const manifest = new Manifest(testManifest);
     manifest.save()
-      .then(manifest => Manifest.find({board: 'ESP8266', revision: 'ESP-12'}))
+      .then(manifest => Manifest.find({board: 'ESP8266', revision: 'ESP-12'}).exec())
       .then(manifests => {
         expect(manifests.length).to.eql(1);
         const manifest = manifests[0];
