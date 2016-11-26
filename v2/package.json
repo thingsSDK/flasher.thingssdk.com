@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha; exit 0"
+    "test": "mocha; exit 0",
+    "dbUp": "node setupDb.js flasher_thingssdk_development up",
+    "dbDown": "node setupDb.js flasher_thingssdk_development down"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
