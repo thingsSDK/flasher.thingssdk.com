@@ -52,7 +52,37 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET by ID */
-router.get('/:id', (req, res, next) => res.json(req.manifest));
+router.get('/manifests/:id', (req, res, next) => res.json(req.manifest));
+
+/* Create new Manifest */
+router.post('/manifests', (req, res, next) => {
+  new Manifest(req.body).save()
+  .then(doc => {
+    res.status(201);
+    res.json({id: doc._id});
+  })
+  .catch(err => next(err));
+});
+
+/* Update a Manifest */
+router.put('/manifests/:id', (req, res, next) => {
+  const manifest = req.manifest;
+  Object.assign(manifest, req.body);
+  manifest.save()
+  .then(doc => {
+    res.json(doc);
+  })
+  .catch(err => next(err));
+});
+
+/* Delete a Manifest */
+router.delete('/manifests/:id', (req, res, next) => {
+  Manifest.remove(req.manifest)
+  .then(doc => {
+    res.json({id: doc._id});
+  })
+  .catch(err => next(err));
+});
 
 // /* GET microcontroller */
 // router.get('/:microcontroller/:firmware/:version', (req, res, next) => {

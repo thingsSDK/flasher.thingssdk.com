@@ -39,12 +39,12 @@ describe('Routes to retrieve manifests', () => {
     });
   });
 
-  describe('GET /:id', () => {
+  describe('GET /manifests/:id', () => {
     it('should return a manifest', done => {
       Manifest.findOne({name: 'Espruino', board: 'ESP8266', version: '1v85'}).exec()
       .then(doc => {
         request(app)
-          .get(`/v2/${doc._id}`)
+          .get(`/v2/manifests/${doc._id}`)
           .expect('Content-Type', /json/)
           .expect(200)
           .end((err, res) => {
@@ -56,12 +56,118 @@ describe('Routes to retrieve manifests', () => {
             expect(res.body).to.have.property('download', 'http://www.espruino.com/files/espruino_1v85.zip');
             expect(res.body).to.have.property('flash').that.is.an('array');
             done();
-          })
+          });
       }).catch(err => {throw err});
-    })
-  })
+    });
+  });
 });
 
+describe('Routes to create, update and delete manifests', () => {
+  const manifexample = {
+    name: 'Gary',
+    version: 'wifi',
+    board: 'yatzee',
+    revision: '12 point plan',
+    description: 'a small, thin, pliable wafer',
+    download: 'www.example.com',
+    flash: [
+      {
+        address: '1313 Mockingbird Lane',
+        path: 'righteous'
+      }
+    ]
+  };
+  describe('POST /manifests', () => {
+    it('should create a new manifest', done => {
+      request(app)
+        .post('/v2/manifests')
+        .send(manifexample)
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          const body = res.body;
+          expect(body).to.be.an('object').and.not.to.have.property('error');
+          expect(body).to.have.property('id');
+          Manifest.findById(body.id).exec()
+          .then(doc => {
+            expect(doc).to.have.property('name', 'Gary');
+            expect(doc).to.have.property('version', 'wifi');
+            expect(doc).to.have.property('board', 'yatzee');
+            expect(doc).to.have.property('revision', '12 point plan');
+            expect(doc).to.have.property('description', 'a small, thin, pliable wafer');
+            expect(doc).to.have.property('download', 'www.example.com');
+            expect(doc).to.have.property('flash').that.is.an.array;
+            expect(doc.flash).to.have.deep.property('[0].address', '1313 Mockingbird Lane');
+            expect(doc.flash).to.have.deep.property('[0].path', 'righteous');
+            done();
+          })
+        })
+    });
+  });
+
+  describe('PUT /manifests/:id', () => {
+    it('should modify an existing manifest', done => {
+      new Manifest(manifexample).save()
+      .then(doc => {
+        request(app)
+          .put(`/v2/manifests/${doc._id}`)
+          .send({
+            name: 'Ursula', 
+            flash:[
+              {
+                address: '1313 Mockingbird Lane',
+                path:'straight and narrow'
+              },
+              {
+                address: 'gettysburg',
+                path: 'finder'
+              }
+            ]
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            const body = res.body;
+            expect(body).to.have.property('name', 'Ursula');
+            expect(body).to.have.property('version', 'wifi');
+            expect(body).to.have.property('board', 'yatzee');
+            expect(body).to.have.property('revision', '12 point plan');
+            expect(body).to.have.property('description', 'a small, thin, pliable wafer');
+            expect(body).to.have.property('download', 'www.example.com');
+            expect(body).to.have.property('flash').that.is.an.array;
+            expect(body.flash).to.have.deep.property('[0].address', '1313 Mockingbird Lane');
+            expect(body.flash).to.have.deep.property('[0].path', 'straight and narrow');
+            expect(body.flash).to.have.deep.property('[1].address', 'gettysburg');
+            expect(body.flash).to.have.deep.property('[1].path', 'finder');
+            done();
+          })
+      })
+    })
+  });
+
+  describe('DELETE /manifests/:id', () => {
+    it('should delete an existing manifest', done => {
+      new Manifest(manifexample).save()
+      .then(doc => {
+        request(app)
+          .delete(`/v2/manifests/${doc._id}`)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            Manifest.findById(doc._id)
+            .then(doc => {
+              expect(doc).to.be.null;
+              done()
+            })
+          })
+      })
+      .catch(err => next(err));
+    });
+  });
+});
 // describe('GET /:microcontroller/:firmware/:version', () => {
 //   it('should return a manifest', done => {
 //     request(app)
