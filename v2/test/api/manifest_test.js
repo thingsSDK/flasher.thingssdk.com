@@ -1,13 +1,13 @@
 const expect = require('chai').expect;
 const request = require('supertest');
-const app = require('../app');
-// const manifestList = require('../flat/manifest-list');
-const Manifest = require('../models').Manifest;
+const app = require('../../app');
+// const manifestList = require('../../flat/manifest-list');
+const Manifest = require('../../models').Manifest;
 
 describe('Routes to retrieve manifests', () => {
   before(done => {
-    Promise.all([5,6,7,8].map(num => new Manifest(require(`../flat/esp8266/esp12/espruino/manifest.1.8${num}.json`)).save()))
-    .then(() => new Manifest(require('../flat/esp8266/esp12/smartjs/manifest.json')).save())
+    Promise.all([5,6,7,8].map(num => new Manifest(require(`../../flat/esp8266/esp12/espruino/manifest.1.8${num}.json`)).save()))
+    .then(() => new Manifest(require('../../flat/esp8266/esp12/smartjs/manifest.json')).save())
     .then(() => {done()})
   });
 
@@ -57,7 +57,7 @@ describe('Routes to retrieve manifests', () => {
             expect(res.body).to.have.property('flash').that.is.an('array');
             done();
           });
-      }).catch(err => {throw err});
+      }).catch(err => done(err));
     });
   });
 });
@@ -164,7 +164,7 @@ describe('Routes to create, update and delete manifests', () => {
             })
           })
       })
-      .catch(err => next(err));
+      .catch(err => done(err));
     });
   });
 });
