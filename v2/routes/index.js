@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
           version: version,
           board: board,
           revision: revision,
-          manifest: `${url}/v2/${_id}`,
+          manifest: `${url}/v2/manifests/${_id}`,
           latest: false
         }
         const option = options.length ? options[options.length - 1] : null;
