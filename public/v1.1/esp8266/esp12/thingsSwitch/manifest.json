@@ -1,0 +1,14 @@
+{
+    "name": "thingsSwitch",
+    "version": "0.0.1",
+    "board": "ESP8266",
+    "revision": "ESP-12",
+    "description": "Turn any ESP8266 MCU ESP-12 in to a switch controlled by Amazon Echo",
+    "download": "http://thingssdk.com/downloads/thingsSwitch-0.0.1.bin",
+    "flash": [
+        {
+            "address": "0x0000",
+            "path": "thingsSwitch-0.0.1.bin"
+        }
+    ]
+}

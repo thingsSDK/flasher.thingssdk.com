@@ -1,5 +1,17 @@
 {
     "options": [
+    {
+            "name": "thingsSwitch",
+            "versions": [
+                {
+                    "version": "0.0.1",
+                    "board": "ESP8266",
+                    "revision": "ESP12",
+                    "manifest": "/v1.1/esp8266/esp12/thingsSwitch/manifest.json",
+                    "latest": true
+                }
+            ]
+        },
         {
             "name": "MicroPython",
             "versions": [
