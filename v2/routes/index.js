@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Manifest = require('../models').Manifest;
 const manifestList = require('../flat/manifest-list.json');
+const verify = require('../verify');
 const port = process.env.PORT || 3000;
 const url = process.env.URL || `http://localhost:${port}`;
 
@@ -31,7 +32,7 @@ router.get('/', function(req, res, next) {
           version: version,
           board: board,
           revision: revision,
-          manifest: `${url}/v2/${_id}`,
+          manifest: `${url}/v2/manifests/${_id}`,
           latest: false
         }
         const option = options.length ? options[options.length - 1] : null;
@@ -55,8 +56,10 @@ router.get('/', function(req, res, next) {
 router.get('/manifests/:id', (req, res, next) => res.json(req.manifest));
 
 /* Create new Manifest */
-router.post('/manifests', (req, res, next) => {
-  new Manifest(req.body).save()
+router.post('/manifests', verify(), (req, res, next) => {
+  // Add author to manifest
+  const manifest = Object.assign(req.body, {author: req.user._id});
+  new Manifest(manifest).save()
   .then(doc => {
     res.status(201);
     res.json({id: doc._id});
@@ -65,23 +68,36 @@ router.post('/manifests', (req, res, next) => {
 });
 
 /* Update a Manifest */
-router.put('/manifests/:id', (req, res, next) => {
+router.put('/manifests/:id', verify(), (req, res, next) => {
   const manifest = req.manifest;
-  Object.assign(manifest, req.body);
-  manifest.save()
-  .then(doc => {
-    res.json(doc);
-  })
-  .catch(err => next(err));
+  // Check authorization
+  if (req.user._id.toString() === manifest.author.toString() || req.user.isAdmin) {
+    Object.assign(manifest, req.body);
+    manifest.save()
+    .then(doc => {
+      return res.json(doc);
+    })
+    .catch(err => next(err));
+  } else {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
 });
 
 /* Delete a Manifest */
-router.delete('/manifests/:id', (req, res, next) => {
-  Manifest.remove(req.manifest)
-  .then(doc => {
-    res.json({id: doc._id});
-  })
-  .catch(err => next(err));
+router.delete('/manifests/:id', verify(), (req, res, next) => {
+  const manifest = req.manifest;
+  // Check authorization
+  if (req.user._id.toString() === manifest.author.toString() || req.user.isAdmin) {
+    Manifest.remove(req.manifest)
+    .then(doc => res.json({ id: doc._id }))
+    .catch(err => next(err));
+  } else {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
 });
 
 // /* GET microcontroller */

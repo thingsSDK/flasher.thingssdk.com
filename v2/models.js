@@ -10,6 +10,7 @@ const ManifestSchema = new Schema({
   board: { type: String, required: true },
   revision: { type: String, required: true },
   description: { type: String, required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   download: { type: String, required: true },
   flash: [{
       address: { type: String, required: true },

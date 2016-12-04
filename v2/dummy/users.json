@@ -1,0 +1,39 @@
+[
+  {
+    "fName": "Molly",
+    "lName": "Murder",
+    "username": "mollymurder",
+    "password": "kill",
+    "twitter": "@mollymurder",
+    "github": "mollymurder",
+    "avatarUrl": "gravatar.com/mm"
+  },
+  {
+    "fName": "Puff",
+    "lName": "Dragon",
+    "username": "puff",
+    "password": "magic",
+    "twitter": "@magicdragon",
+    "github": "magicdragon",
+    "avatarUrl": "gravatar.com/magicdragon"
+  },
+  {
+    "fName": "Josefin",
+    "lName": "Robot",
+    "username": "jrobot",
+    "password": "binary",
+    "twitter": "@josefin",
+    "isAdmin": true,
+    "github": "josifin",
+    "avatarUrl": "gravatar.com/robot"
+  },
+  {
+    "fName": "Harry",
+    "lName": "Henderson",
+    "username": "sasquach",
+    "password": "watercolormemoir",
+    "twitter": "@harryhenderson",
+    "github": "harryhenderson",
+    "avatarUrl": "myspace.com/photos/clearing.png"
+  }
+]

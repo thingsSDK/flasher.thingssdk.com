@@ -4,6 +4,8 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const routes = require('./routes');
+const usersRoutes = require('./routes/users');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -19,6 +21,8 @@ const db = mongoose.connection;
 db.on("error", err => console.error("connection error:", err));
 
 app.use('/v2', routes);
+app.use('/v2/users', usersRoutes);
+app.use('/v2/authorize', auth);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
