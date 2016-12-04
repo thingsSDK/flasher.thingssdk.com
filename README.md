@@ -17,7 +17,7 @@ or cut 'n' paste:
 ## Currently Available Routes
 
 VERB|ROUTE|DESCRIPTION|PROTECTION
----|----|----
+---|----|----|---
 GET|[/v2](http://localhost:3000/v2)|  directory of manifests|none
 GET|/v2/manifests/:id| individual manifests by ID|none
 POST|/v2/manifests|store new manifest|Must be existing user
