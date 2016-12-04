@@ -23,19 +23,21 @@ GET|/v2/manifests/:id| individual manifests by ID|none
 POST|/v2/manifests|store new manifest|Must be existing user
 PUT|/v2/manifests/:id|edit manifest|Must be author or admin
 DELETE|/v2/manifests/:id|delete manifest|Must be author or admin
+---|----|----|---
 GET|/v2/authorize|obtain authorization token|Must be existing user
 
 
 ## Notes
 
 ### Obtaining Auth Token
-#### To obtain token:
+#### First:
 
-1. base64 encode an existing username & password in the form `<username>:<password>`. You can run the utility for this from the v2 directory:
+base64 encode an existing username & password in the form `<username>:<password>`. You can run the utility for this from the v2 directory:
 ```
 node encodeCred <username> <password>
 ```
-2. Make a GET request to `/v2/authorize`, puttin the encoded string in an `Authorization` header.
+#### Second:
+Make a GET request to `/v2/authorize`, puttin the encoded string in an `Authorization` header.
 
 Token will expire after two hours of creation.
 ### Using Token
