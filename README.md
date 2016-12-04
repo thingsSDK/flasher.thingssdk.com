@@ -42,13 +42,13 @@ DELETE|/v2/users/:id|delete user|currently unprotected
 ## Notes
 
 ### Obtaining Auth Token
-#### 1:
+#### Step 1
 
 base64 encode an existing username & password in the form `<username>:<password>`. You can run the utility for this from the v2 directory:
 ```
 node encodeCred <username> <password>
 ```
-#### 2:
+#### Step 2
 Make a GET request to `/v2/authorize`, puttin the encoded string in an `Authorization` header.
 
 Token will expire after two hours of creation.
