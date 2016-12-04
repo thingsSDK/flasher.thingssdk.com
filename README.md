@@ -15,6 +15,7 @@ or cut 'n' paste:
 * Set up the db and start the server with `npm run dbUp && nodemon`
 
 ## Currently Available Routes
+### Manifests
 
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
@@ -23,9 +24,15 @@ GET|/v2/manifests/:id| individual manifests by ID|none
 POST|/v2/manifests|store new manifest|Must be existing user
 PUT|/v2/manifests/:id|edit manifest|Must be author or admin
 DELETE|/v2/manifests/:id|delete manifest|Must be author or admin
-|||
+
+### Authorization
+VERB|ROUTE|DESCRIPTION|PROTECTION
+---|----|----|---
 GET|/v2/authorize|obtain authorization token|Must be existing user
-|||
+
+### Users
+VERB|ROUTE|DESCRIPTION|PROTECTION
+---|----|----|---
 GET|/v2/users|get all users|currently unprotected
 POST|/v2/users|create user|currently unprotected
 GET|/v2/user|get user|currently unprotected
