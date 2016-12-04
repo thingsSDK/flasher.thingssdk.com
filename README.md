@@ -29,10 +29,11 @@ GET|/v2/authorize|obtain authorization token|Must be existing user
 ## Notes
 
 ### Obtaining Auth Token
-To obtain token
+#### To obtain token:
+
 1. base64 encode an existing username & password in the form `<username>:<password>`. You can run the utility for this from the v2 directory:
 ```
-node encodeCred.js <username> <password>
+node encodeCred <username> <password>
 ```
 2. Make a GET request to `/v2/authorize`, puttin the encoded string in an `Authorization` header.
 
