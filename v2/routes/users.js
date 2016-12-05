@@ -28,7 +28,7 @@ router.get('/', verify(true), function(req, res, next) {
 });
 
 /* Create new User */
-router.post('/', (req, res, next) => {
+router.post('/', verify(true), (req, res, next) => {
   new User(req.body).save()
   .then(doc => {
     res.status(201);

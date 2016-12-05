@@ -30,13 +30,13 @@ VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
 GET|/v2/authorize|obtain authorization token|Must be existing user
 POST|/v2/signup|submit new user in req.body, get verification route|none
-GET|/v2/signup/:jwt|verify account, enable use of API|existing user
+GET|/v2/signup/:jwt|verify account, enable use of API|Must be existing user
 
 ### Users
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
 GET|/v2/users|get all users|admin only
-POST|/v2/users|create user|none
+POST|/v2/users|create user|admin only
 GET|/v2/user|get user|user or admin
 PUT|/v2/users/:id|edit user|user or admin
 DELETE|/v2/users/:id|delete user|admin only
