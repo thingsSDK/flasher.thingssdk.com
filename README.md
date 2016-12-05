@@ -76,5 +76,6 @@ To make calls to a protected route, put the token in an `Authorization` header i
 
 ## Current known issues
 1. Email is not collected, but will be needed. Probably use email for username.
-2. This is all only written for a Golden Path. Not very much validation or security measures are in place, but please suggest anything you think of!
-3. Probably other stuff I'll think of later when my computer is in another room.
+* Unverified accounts can still get auth tokens at the moment :P
+* This is all only written for a Golden Path. Not very much validation or security measures are in place, but please suggest anything you think of!
+* Probably other stuff I'll think of later when my computer is in another room.
