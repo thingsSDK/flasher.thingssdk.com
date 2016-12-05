@@ -24,6 +24,11 @@ router.get('/', function(req, res, next) {
   })
   .exec()
   .then(user => {
+    if (!user.verified) {
+      const err = new Error('Unverified Account');
+      err.status = 401;
+      throw err;
+    }
     user.comparePassword(req.pw, (err, isMatch) =>{
       if (err) next(err);
       const token = jwt.sign({ id: user._id, exp: Date.now() + 2 * 60 * 60 * 1000}, secret);

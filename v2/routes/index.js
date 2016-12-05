@@ -21,7 +21,22 @@ router.param('id', (req, res, next, id) => {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  let query;
+  if (req.query.search) {
+    const search = req.query.search;
+    const regExSearch = new RegExp(search, 'gi');
+    query = `name version board revision description download`
+    .split(' ')
+    .map(key => {
+      let q = {}
+      q[key] = regExSearch;
+      return q;
+    });
+  }
+
   Manifest.find({})
+    .where({ published: true })
+    .or(query)
     .sort('-name')
     .exec()
     .then(list => {
@@ -53,7 +68,14 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET by ID */
-router.get('/manifests/:id', (req, res, next) => res.json(req.manifest));
+router.get('/manifests/:id', (req, res, next) => {
+  if (req.manifest.published) return res.json(req.manifest)
+  else {
+    const err = new Error('Not found');
+    err.status = 404;
+    return next(err);
+  }
+});
 
 /* Create new Manifest */
 router.post('/manifests', verify(), (req, res, next) => {

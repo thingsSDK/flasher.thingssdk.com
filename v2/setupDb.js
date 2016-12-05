@@ -15,6 +15,7 @@ const actions = {
       return Promise.all([5,6,7,8].map(num => {
         const man = require(`./flat/esp8266/esp12/espruino/manifest.1.8${num}.json`);
         man.author = users.Josefin._id;
+        man.published = true;
         return new Manifest(man).save()
       }))
       .then(() => users)
@@ -22,6 +23,7 @@ const actions = {
     .then((users)=> {
       const man = require('./flat/esp8266/esp12/smartjs/manifest.json');
       man.author = users.Molly._id;
+      man.published = true;
       return new Manifest(man).save()
     })
     .then(() => {
