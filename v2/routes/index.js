@@ -58,7 +58,7 @@ router.get('/manifests/:id', (req, res, next) => res.json(req.manifest));
 /* Create new Manifest */
 router.post('/manifests', verify(), (req, res, next) => {
   // Add author to manifest
-  const manifest = Object.assign(req.body, {author: req.user._id});
+  const manifest = Object.assign(req.body, {author: req.authUser._id});
   new Manifest(manifest).save()
   .then(doc => {
     res.status(201);
@@ -71,7 +71,7 @@ router.post('/manifests', verify(), (req, res, next) => {
 router.put('/manifests/:id', verify(), (req, res, next) => {
   const manifest = req.manifest;
   // Check authorization
-  if (req.user._id.toString() === manifest.author.toString() || req.user.isAdmin) {
+  if (req.authUser._id.toString() === manifest.author.toString() || req.authUser.isAdmin) {
     Object.assign(manifest, req.body);
     manifest.save()
     .then(doc => {
@@ -89,7 +89,7 @@ router.put('/manifests/:id', verify(), (req, res, next) => {
 router.delete('/manifests/:id', verify(), (req, res, next) => {
   const manifest = req.manifest;
   // Check authorization
-  if (req.user._id.toString() === manifest.author.toString() || req.user.isAdmin) {
+  if (req.authUser._id.toString() === manifest.author.toString() || req.authUser.isAdmin) {
     Manifest.remove(req.manifest)
     .then(doc => res.json({ id: doc._id }))
     .catch(err => next(err));

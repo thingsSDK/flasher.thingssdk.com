@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const usersRoutes = require('./routes/users');
 const auth = require('./routes/auth');
+const signup = require('./routes/signup');
 
 const app = express();
 
@@ -23,6 +24,7 @@ db.on("error", err => console.error("connection error:", err));
 app.use('/v2', routes);
 app.use('/v2/users', usersRoutes);
 app.use('/v2/authorize', auth);
+app.use('/v2/signup', signup);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

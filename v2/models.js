@@ -29,7 +29,8 @@ const UserSchema = new Schema({
   isAdmin: { type: Boolean, default: false },
   twitter: String,
   github: String,
-  avatarUrl: String
+  avatarUrl: String,
+  verified: { type: Boolean, default: false }
 });
 
 UserSchema.pre('save', function(next) {

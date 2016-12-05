@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models').User;
+const verify = require('../verify');
 
 router.param('id', (req, res, next, id) => {
   User.findById(id)
@@ -16,7 +17,7 @@ router.param('id', (req, res, next, id) => {
 });
 
 /* GET all users. */
-router.get('/', function(req, res, next) {
+router.get('/', verify(true), function(req, res, next) {
   User.find({})
     .sort('-username')
     .exec()
@@ -37,21 +38,35 @@ router.post('/', (req, res, next) => {
 });
 
 /* GET by ID */
-router.get('/:id', (req, res, next) => res.json(req.user));
+router.get('/:id', verify(), (req, res, next) => {
+  if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
+    return res.json(req.user);
+  } else {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
+});
 
 /* Update a User */
-router.put('/:id', (req, res, next) => {
+router.put('/:id', verify(), (req, res, next) => {
   const user = req.user;
-  Object.assign(user, req.body);
-  user.save()
-  .then(doc => {
-    res.json(doc);
-  })
-  .catch(err => next(err));
+  if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
+    Object.assign(user, req.body);
+    user.save()
+    .then(doc => {
+      res.json(doc);
+    })
+    .catch(err => next(err));
+  } else {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
 });
 
 /* Delete a User */
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', verify(true), (req, res, next) => {
   User.remove(req.user)
   .then(doc => {
     res.json({id: doc._id});

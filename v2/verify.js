@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const secret = require('./config').auth.secret;
 const User = require('./models').User;
 
-unauthorized = (message) => {
+const unauthorized = (message) => {
   const err = new Error(message || 'Unauthorized');
   err.status = 401;
   return err;
@@ -23,7 +23,7 @@ module.exports = adminStatus => {
       User.findById(decoded.id).exec()
       .then(user => {
         if(user) {
-          req.user = user;
+          req.authUser = user;
           if (adminStatus) {
             if (user.isAdmin) return next();
             return next(unauthorized());

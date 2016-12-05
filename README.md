@@ -25,21 +25,40 @@ POST|/v2/manifests|store new manifest|Must be existing user
 PUT|/v2/manifests/:id|edit manifest|Must be author or admin
 DELETE|/v2/manifests/:id|delete manifest|Must be author or admin
 
-### Authorization
+### Signup and Authorization
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
 GET|/v2/authorize|obtain authorization token|Must be existing user
+POST|/v2/signup|submit new user in req.body, get verification route|none
+GET|/v2/signup/:jwt|verify account, enable use of API|existing user
 
 ### Users
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
-GET|/v2/users|get all users|currently unprotected
-POST|/v2/users|create user|currently unprotected
-GET|/v2/user|get user|currently unprotected
-PUT|/v2/users/:id|edit user|currently unprotected
-DELETE|/v2/users/:id|delete user|currently unprotected
+GET|/v2/users|get all users|admin only
+POST|/v2/users|create user|none
+GET|/v2/user|get user|user or admin
+PUT|/v2/users/:id|edit user|user or admin
+DELETE|/v2/users/:id|delete user|admin only
 
 ## Notes
+
+### Signing Up
+#### Step 1
+POST new user JSON to /v2/signup, in the following form
+```
+{
+  "fName": "Brittany",
+  "lName": "Brownman",
+  "username": "britt",
+  "password": "bearsrule",
+  "twitter": "@britber",
+  "github": "brittanyb",
+  "avatarUrl": "google.com/images/brown/3"
+}
+```
+#### Step 2
+Click on returned link to verify account.
 
 ### Obtaining Auth Token
 #### Step 1
@@ -49,8 +68,13 @@ base64 encode an existing username & password in the form `<username>:<password>
 node encodeCred <username> <password>
 ```
 #### Step 2
-Make a GET request to `/v2/authorize`, puttin the encoded string in an `Authorization` header.
+Make a GET request to `/v2/authorize`, putting the encoded string in an `Authorization` header.
 
 Token will expire after two hours of creation.
 ### Using Token
 To make calls to a protected route, put the token in an `Authorization` header in the form `Bearer: <token>`.
+
+## Current known issues
+1. Email is not collected, but will be needed. Probably use email for username.
+2. This is all only written for a Golden Path. Not very much validation or security measures are in place, but please suggest anything you think of!
+3. Probably other stuff I'll think of later when my computer is in another room.
