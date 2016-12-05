@@ -19,7 +19,8 @@ or cut 'n' paste:
 
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
-GET|[/v2](http://localhost:3000/v2)|  directory of manifests|none
+GET|/v2|directory of manifests|none
+GET|/v2?search=text|will show manifests with 'text' (case insensitive) in 'name', 'version', 'board', 'revision', 'description', and 'download' fields|none
 GET|/v2/manifests/:id| individual manifests by ID|none
 POST|/v2/manifests|store new manifest|Must be existing user
 PUT|/v2/manifests/:id|edit manifest|Must be author or admin
