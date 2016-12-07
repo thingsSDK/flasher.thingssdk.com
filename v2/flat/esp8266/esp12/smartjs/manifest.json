@@ -8,19 +8,23 @@
   "flash": [
     {
       "address": "0x0000",
-      "path": "smartjs-20160324150833/0x00000.bin"
+      "path": "smartjs-20160324150833/0x00000.bin",
+      "sha": "one"
     },
     {
       "address": "0x1000",
-      "path": "smartjs-20160324150833/0x01000.bin"
+      "path": "smartjs-20160324150833/0x01000.bin",
+      "sha": "one"
     },
     {
       "address": "0xdc000.bin",
-      "path": "smartjs-20160324150833/0xdc000.bin"
+      "path": "smartjs-20160324150833/0xdc000.bin",
+      "sha": "one"
     },
     {
       "address": "0x11000",
-      "path": "smartjs-20160324150833/0x11000.bin"
+      "path": "smartjs-20160324150833/0x11000.bin",
+      "sha": "one"
     }
   ]
 }

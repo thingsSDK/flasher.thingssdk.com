@@ -3,6 +3,8 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
+const jwt = require('jsonwebtoken');
+const secret = require('./config').auth.secret;
 
 const ManifestSchema = new Schema({
   name: { type: String, required: true },
@@ -14,7 +16,8 @@ const ManifestSchema = new Schema({
   download: { type: String, required: true },
   flash: [{
       address: { type: String, required: true },
-      path: { type: String, required: true }
+      path: { type: String, required: true },
+      sha: {type: String, required: true}
   }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
@@ -60,15 +63,26 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
       cb(null, isMatch);
   });
 }
-// ManifestSchema.method("", () => {
-// });
 
-// ManifestSchema.method("", () => {
-// });
-
-// ManifestSchema.pre("save", next => {
-//   next();
-// });
+UserSchema.statics.loadFromToken = function(raw) {
+  if (!raw || raw.search('Bearer: ') !== 0) return Promise.resolve(null);
+  const token = raw.replace('Bearer: ', '');
+  let decoded;
+  try {
+    decoded = jwt.verify(token, secret);
+  } catch (e) {
+    return Promise.resolve(null);
+  }
+  if (decoded.exp < Date.now()) {
+    return Promise.resolve(null);
+  }
+  return this.findById(decoded.id).exec()
+  .then(user => user)
+  .catch(err => {
+    console.error('User static method loadFromToken failed.');
+    return null;
+  });
+}
 
 
 module.exports.Manifest = mongoose.model("Manifest", ManifestSchema);

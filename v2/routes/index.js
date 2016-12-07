@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Manifest = require('../models').Manifest;
 const manifestList = require('../flat/manifest-list.json');
-const verify = require('../verify');
+// const verify = require('../verify');
 const port = process.env.PORT || 3000;
 const url = process.env.URL || `http://localhost:${port}`;
 
 router.param('id', (req, res, next, id) => {
+  console.log('is this run')
   Manifest.findById(id)
     .exec()
     .then(manifest => {
@@ -19,13 +20,21 @@ router.param('id', (req, res, next, id) => {
     });
 });
 
+function isAuthorized(req, mustBeUser) {
+  const doc = req.manifest;
+  const user = req.authorizedUser;
+  if (mustBeUser && !user) return false; 
+  return doc.published || user && (user.isAdmin || user._id.toString() === doc.author.toString());
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let query;
+  console.log('get init')
+  let fieldsToSearch;
   if (req.query.search) {
     const search = req.query.search;
     const regExSearch = new RegExp(search, 'gi');
-    query = `name version board revision description download`
+    fieldsToSearch = `name version board revision description download`
     .split(' ')
     .map(key => {
       let q = {}
@@ -34,10 +43,17 @@ router.get('/', function(req, res, next) {
     });
   }
 
-  Manifest.find({})
-    .where({ published: true })
-    .or(query)
-    .sort('-name')
+  const manifestQuery = Manifest.find({});
+  if (req.authorizedUser && !req.authorizedUser.isAdmin) {
+    console.log(req.authorizedUser._id)
+    manifestQuery.or([{published:true}, {author:req.authorizedUser._id}])
+  } else if (!req.authorizedUser) {
+    manifestQuery.where({ published: true })
+  }
+  if (fieldsToSearch) {
+    manifestQuery.or(fieldsToSearch)
+  }
+  manifestQuery.sort('-name')
     .exec()
     .then(list => {
       const result = {options:[]};
@@ -69,7 +85,7 @@ router.get('/', function(req, res, next) {
 
 /* GET by ID */
 router.get('/manifests/:id', (req, res, next) => {
-  if (req.manifest.published) return res.json(req.manifest)
+  if (isAuthorized(req)) return res.json(req.manifest)
   else {
     const err = new Error('Not found');
     err.status = 404;
@@ -78,9 +94,14 @@ router.get('/manifests/:id', (req, res, next) => {
 });
 
 /* Create new Manifest */
-router.post('/manifests', verify(), (req, res, next) => {
+router.post('/manifests', (req, res, next) => {
+  if (!req.authorizedUser) {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
   // Add author to manifest
-  const manifest = Object.assign(req.body, {author: req.authUser._id});
+  const manifest = Object.assign(req.body, {author: req.authorizedUser._id});
   new Manifest(manifest).save()
   .then(doc => {
     res.status(201);
@@ -90,10 +111,10 @@ router.post('/manifests', verify(), (req, res, next) => {
 });
 
 /* Update a Manifest */
-router.put('/manifests/:id', verify(), (req, res, next) => {
+router.put('/manifests/:id', (req, res, next) => {
   const manifest = req.manifest;
   // Check authorization
-  if (req.authUser._id.toString() === manifest.author.toString() || req.authUser.isAdmin) {
+  if (isAuthorized(req, true)) {
     Object.assign(manifest, req.body);
     manifest.save()
     .then(doc => {
@@ -108,10 +129,10 @@ router.put('/manifests/:id', verify(), (req, res, next) => {
 });
 
 /* Delete a Manifest */
-router.delete('/manifests/:id', verify(), (req, res, next) => {
+router.delete('/manifests/:id', (req, res, next) => {
   const manifest = req.manifest;
   // Check authorization
-  if (req.authUser._id.toString() === manifest.author.toString() || req.authUser.isAdmin) {
+  if (isAuthorized(req, true)) {
     Manifest.remove(req.manifest)
     .then(doc => res.json({ id: doc._id }))
     .catch(err => next(err));

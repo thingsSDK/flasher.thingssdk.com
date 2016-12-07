@@ -22,7 +22,7 @@ function handOutToken(user) {
 }
 
 /* Sign up for user account */
-router.post('/', (req, res, next) => {
+router.post('signup', (req, res, next) => {
   User.findOne({username:req.body.username})
   .then(user => {
     if (user === null) return new User(req.body).save();
@@ -41,7 +41,7 @@ router.post('/', (req, res, next) => {
 });
 
 /* Verify user account */
-router.get('/:jwt', (req, res, next) => {
+router.get('signup/:jwt', (req, res, next) => {
   jwt.verify(req.params.jwt, secret, (err, decoded) => {
     if (err) return next(err);
     if (decoded.exp < Date.now()) {

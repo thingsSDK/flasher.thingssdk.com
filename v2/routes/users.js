@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
+  const express = require('express');
+  const router = express.Router();
 const User = require('../models').User;
-const verify = require('../verify');
-
+  function isAuthorized(argument) {
+  // body...
+}
 router.param('id', (req, res, next, id) => {
   User.findById(id)
     .exec()
@@ -17,7 +18,7 @@ router.param('id', (req, res, next, id) => {
 });
 
 /* GET all users. */
-router.get('/', verify(true), function(req, res, next) {
+router.get('/', function(req, res, next) {
   User.find({})
     .sort('-username')
     .exec()
@@ -28,7 +29,7 @@ router.get('/', verify(true), function(req, res, next) {
 });
 
 /* Create new User */
-router.post('/', verify(true), (req, res, next) => {
+router.post('/', (req, res, next) => {
   new User(req.body).save()
   .then(doc => {
     res.status(201);
@@ -38,7 +39,7 @@ router.post('/', verify(true), (req, res, next) => {
 });
 
 /* GET by ID */
-router.get('/:id', verify(), (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
     return res.json(req.user);
   } else {
@@ -49,7 +50,7 @@ router.get('/:id', verify(), (req, res, next) => {
 });
 
 /* Update a User */
-router.put('/:id', verify(), (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   const user = req.user;
   if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
     Object.assign(user, req.body);
@@ -66,7 +67,7 @@ router.put('/:id', verify(), (req, res, next) => {
 });
 
 /* Delete a User */
-router.delete('/:id', verify(true), (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   User.remove(req.user)
   .then(doc => {
     res.json({id: doc._id});

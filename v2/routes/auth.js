@@ -17,8 +17,8 @@ router.use((req, res, next) => {
   next();
 });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+/* GET auth token */
+router.get('/authorize', function(req, res, next) {
   User.findOne({
     username: req.un
   })
