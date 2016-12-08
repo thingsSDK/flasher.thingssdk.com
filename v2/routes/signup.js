@@ -25,6 +25,7 @@ function handOutToken(user) {
 router.post('signup', (req, res, next) => {
   User.findOne({username:req.body.username})
   .then(user => {
+    Object.assign(req.body, {isAdmin: false});
     if (user === null) return new User(req.body).save();
     else {
       if (user.verified) {

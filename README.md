@@ -19,11 +19,11 @@ or cut 'n' paste:
 
 VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
-GET|/v2|directory of manifests|none
-GET|/v2?search=text|will show manifests with 'text' (case insensitive) in 'name', 'version', 'board', 'revision', 'description', or 'download' fields|none
-GET|/v2/manifests/:id| individual manifests by ID|none
+GET|/v2|directory of published manifests|none; admins see unpublished
+GET|/v2?search=text|will show manifests with 'text' (case insensitive) in 'name', 'version', 'board', 'revision', 'description', or 'download' fields|none; admins see unpublished
+GET|/v2/manifests/:id| individual manifests by ID|none; if unpublished, only author or admin can use
 POST|/v2/manifests|store new manifest|Must be existing user
-PUT|/v2/manifests/:id|edit manifest|Must be author or admin
+PUT|/v2/manifests/:id|edit manifest|Must be author or admin; only admin can set 'published'
 DELETE|/v2/manifests/:id|delete manifest|Must be author or admin
 
 ### User Management and Authorization
@@ -31,8 +31,8 @@ VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
 GET|/v2/authorize|obtain authorization token|Must be existing user
 POST|/v2/signup|submit new user in req.body, get verification route|none
-GET|/v2/signup/:jwt|verify account, enable use of API|Must be existing user
-GET|/v2/my-account|Get user document|Must be existing user
+GET|/v2/signup/:jwt|verify account, enable authenticated use of API|Must be existing user
+GET|/v2/my-account|Get own user document|Must be existing user
 PUT|/v2/my-account|Modify user document|Must be existing user
 DELETE|/v2/my-account|Delete user document|Must be existing user
 
@@ -41,8 +41,8 @@ VERB|ROUTE|DESCRIPTION|PROTECTION
 ---|----|----|---
 GET|/v2/users|get all users|admin only
 POST|/v2/users|create user|admin only
-GET|/v2/user|get user|user or admin
-PUT|/v2/users/:id|edit user|user or admin
+GET|/v2/user|get user|admin only
+PUT|/v2/users/:id|edit user|admin only
 DELETE|/v2/users/:id|delete user|admin only
 
 ## Notes
@@ -81,10 +81,3 @@ To make calls to a protected route, put the token in an `Authorization` header i
 ## Current known issues
 1. Email is not collected, but will be needed. Probably use email for username.
 * This is all only written for a Golden Path. Not very much validation or security measures are in place, but please suggest anything you think of!
-
-## To Dos
-* Binary authors can update / submit official binaries
-  * Include SHAs
-* Show SHAs
-* Flasher.js Staging Environment
-* Approval process

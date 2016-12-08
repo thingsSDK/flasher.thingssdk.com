@@ -15,6 +15,7 @@ router.get('/my-account', (req, res, next) => {
 });
 
 router.put('/my-account', (req, res, next) => {
+  if(!req.authorizedUser.isAdmin) Object.assign(req.body, {isAdmin: false});
   Object.assign(req.authorizedUser, req.body);
   req.authorizedUser.save()
   .then(user => res.json(user))

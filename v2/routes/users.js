@@ -1,9 +1,17 @@
-  const express = require('express');
-  const router = express.Router();
+const express = require('express');
+const router = express.Router();
 const User = require('../models').User;
-  function isAuthorized(argument) {
-  // body...
-}
+
+// Only admins can use these routes
+router.use((req, res, next) => {
+  if (!req.authorizedUser || !req.authorizedUser.isAdmin) {
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    return next(err);
+  }
+  return next();
+});
+
 router.param('id', (req, res, next, id) => {
   User.findById(id)
     .exec()
@@ -40,30 +48,18 @@ router.post('/', (req, res, next) => {
 
 /* GET by ID */
 router.get('/:id', (req, res, next) => {
-  if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
-    return res.json(req.user);
-  } else {
-    const err = new Error('Unauthorized');
-    err.status = 401;
-    return next(err);
-  }
+  return res.json(req.user);
 });
 
 /* Update a User */
 router.put('/:id', (req, res, next) => {
   const user = req.user;
-  if (req.authUser._id.toString() === user._id.toString() || req.authUser.isAdmin) {
-    Object.assign(user, req.body);
-    user.save()
-    .then(doc => {
-      res.json(doc);
-    })
-    .catch(err => next(err));
-  } else {
-    const err = new Error('Unauthorized');
-    err.status = 401;
-    return next(err);
-  }
+  Object.assign(user, req.body);
+  user.save()
+  .then(doc => {
+    res.json(doc);
+  })
+  .catch(err => next(err));
 });
 
 /* Delete a User */

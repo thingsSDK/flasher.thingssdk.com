@@ -27,6 +27,10 @@ function isAuthorized(req, mustBeUser) {
   return doc.published || user && (user.isAdmin || user._id.toString() === doc.author.toString());
 }
 
+function preserveUnpublished(req) {
+  if (!req.authorizedUser || !req.authorizedUser.isAdmin) req.body.published = false;
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('get init')
@@ -100,9 +104,9 @@ router.post('/manifests', (req, res, next) => {
     err.status = 401;
     return next(err);
   }
-  // Add author to manifest
-  const manifest = Object.assign(req.body, {author: req.authorizedUser._id});
-  new Manifest(manifest).save()
+  // Add author to manifest, assure unpublished status
+  Object.assign(req.body, {author: req.authorizedUser._id, published: false});
+  new Manifest(req.body).save()
   .then(doc => {
     res.status(201);
     res.json({id: doc._id});
@@ -115,6 +119,7 @@ router.put('/manifests/:id', (req, res, next) => {
   const manifest = req.manifest;
   // Check authorization
   if (isAuthorized(req, true)) {
+    if (!manifest.published) preserveUnpublished(req);
     Object.assign(manifest, req.body);
     manifest.save()
     .then(doc => {
