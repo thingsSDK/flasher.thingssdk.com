@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || `http://localhost:${port}`;
@@ -19,6 +20,7 @@ function prepareManifestUrls(manifestList) {
 [v1_ManifestList, v1_1_ManifestList].forEach(prepareManifestUrls);
 v1_1_ManifestList.options = v1_ManifestList.options.concat(v1_1_ManifestList.options);
 
+app.use(cors());
 app.use(express.static('public'));
 
 app.get("/", (req,res) => res.redirect('http://thingssdk.com'));
