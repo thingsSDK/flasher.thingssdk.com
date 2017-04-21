@@ -7,7 +7,6 @@ const port = process.env.PORT || 3000;
 const url = process.env.URL || `http://localhost:${port}`;
 
 router.param('id', (req, res, next, id) => {
-  console.log('is this run')
   Manifest.findById(id)
     .exec()
     .then(manifest => {
@@ -31,6 +30,7 @@ function preserveUnpublished(req) {
   if (!req.authorizedUser || !req.authorizedUser.isAdmin) req.body.published = false;
 }
 
+// TODO fail request from invalid Auth headers
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('get init')
@@ -47,6 +47,12 @@ router.get('/', function(req, res, next) {
     });
   }
 
+  const checkForAuthorship = (authorizedUser, authorID) => {
+    if (!authorizedUser) {
+      return false
+    }
+    return authorizedUser._id && authorizedUser._id.toString() === authorID.toString()
+  }
   const manifestQuery = Manifest.find({});
   if (req.authorizedUser && !req.authorizedUser.isAdmin) {
     console.log(req.authorizedUser._id)
@@ -62,11 +68,13 @@ router.get('/', function(req, res, next) {
     .then(list => {
       const result = {options:[]};
       list.reduce((options, manifest) => {
-        const { version, board, revision, _id } = manifest;
+        const { version, board, revision, _id, author, published } = manifest;
         const listInfo = {
-          version: version,
-          board: board,
-          revision: revision,
+          version,
+          board,
+          revision,
+          published,
+          isAuthor: checkForAuthorship(req.authorizedUser, author.toString()),
           manifest: `${url}/v2/manifests/${_id}`,
           latest: false
         }

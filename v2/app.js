@@ -23,6 +23,18 @@ mongoose.connect(uri);
 const db = mongoose.connection;
 db.on("error", err => console.error("connection error:", err));
 
+/* CORS */
+app.use(function(req, res, next){
+	res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+	if(req.method === "OPTIONS") {
+		res.header("Access-Control-Allow-Methods", "PUT,POST,DELETE");
+		return res.status(200).json({});
+	}
+	next();
+});
+/* END CORS */
+
 app.use(authorize);
 app.use('/v2', routes);
 app.use('/v2', signup);

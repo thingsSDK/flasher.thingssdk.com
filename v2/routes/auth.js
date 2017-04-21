@@ -24,13 +24,23 @@ router.get('/authorize', function(req, res, next) {
   })
   .exec()
   .then(user => {
+    if (!user) {
+      const err = new Error('Forbidden');
+      err.status = 403;
+      return next(err);
+    }
     if (!user.verified) {
       const err = new Error('Unverified Account');
       err.status = 401;
-      throw err;
+      return next(err);
     }
     user.comparePassword(req.pw, (err, isMatch) =>{
-      if (err) next(err);
+      if (err) return next(err);
+      if (!isMatch) {
+        const err = new Error('Forbidden')
+        err.status = 403
+        return next(err)
+      }
       const token = jwt.sign({ id: user._id, exp: Date.now() + 2 * 60 * 60 * 1000}, secret);
       res.json({access_token:token});
     })
