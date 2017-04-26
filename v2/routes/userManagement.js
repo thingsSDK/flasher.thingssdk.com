@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models').User;
 
+const filterObj = require('../util').filterObject;
+
 router.use((req, res, next) => {
   if(req.authorizedUser) return next();
   const err = new Error('Unauthorized');
@@ -11,7 +13,10 @@ router.use((req, res, next) => {
 
 router.get('/my-account', (req, res, next) => {
   console.log('hit')
-  return res.json(req.authorizedUser);
+  const userObj = req.authorizedUser.toObject()
+   const infoToSend = filterObj(['__v', '_id', 'password'], userObj)
+    console.log(infoToSend)
+  return res.json(infoToSend);
 });
 
 router.put('/my-account', (req, res, next) => {

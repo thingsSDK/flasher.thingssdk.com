@@ -63,7 +63,7 @@ router.get('/', function(req, res, next) {
   if (fieldsToSearch) {
     manifestQuery.or(fieldsToSearch)
   }
-  manifestQuery.sort('-name')
+  manifestQuery.sort('name')
     .exec()
     .then(list => {
       const result = {options:[]};

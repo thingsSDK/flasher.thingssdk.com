@@ -22,6 +22,7 @@ router.get('/authorize', function(req, res, next) {
   User.findOne({
     username: req.un
   })
+  .select('+password')
   .exec()
   .then(user => {
     if (!user) {

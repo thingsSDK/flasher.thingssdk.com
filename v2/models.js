@@ -28,7 +28,7 @@ const UserSchema = new Schema({
   fName: String,
   lName: String,
   username: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
   isAdmin: { type: Boolean, default: false },
   twitter: String,
   github: String,
@@ -76,7 +76,7 @@ UserSchema.statics.loadFromToken = function(raw) {
   if (decoded.exp < Date.now()) {
     return Promise.resolve(null);
   }
-  return this.findById(decoded.id).exec()
+  return this.findById(decoded.id).select('+password').exec()
   .then(user => user)
   .catch(err => {
     console.error('User static method loadFromToken failed.');
