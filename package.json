@@ -1,0 +1,34 @@
+{
+  "name": "flasher.thingssdk.com",
+  "version": "1.0.0",
+  "description": "Flasher.js API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thingsSDK/flasher.thingssdk.com.git"
+  },
+  "keywords": [
+    "flasher.js",
+    "api",
+    "javascript",
+    "microcontroller",
+    "manifests",
+    "electronics"
+  ],
+  "author": "Andrew Chalkley <andrew@chalkley.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thingsSDK/flasher.thingssdk.com/issues"
+  },
+  "engines": {
+    "node": "^6.9.1"
+  },
+  "homepage": "https://github.com/thingsSDK/flasher.thingssdk.com#readme",
+  "dependencies": {
+    "cors": "^2.8.1",
+    "express": "^4.14.0"
+  }
+}
