@@ -17,7 +17,7 @@ const ManifestSchema = new Schema({
   flash: [{
       address: { type: String, required: true },
       path: { type: String, required: true },
-      sha: {type: String, required: true}
+      sha: {type: String, required: false}
   }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
