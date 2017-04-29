@@ -9,6 +9,7 @@ describe('Routes to retrieve manifests', () => {
     Promise.all([5,6,7,8].map(num => new Manifest(require(`../../flat/esp8266/esp12/espruino/manifest.1.8${num}.json`)).save()))
     .then(() => new Manifest(require('../../flat/esp8266/esp12/smartjs/manifest.json')).save())
     .then(() => {done()})
+    .catch(err=>done(err))
   });
 
   after(done => {

@@ -6,7 +6,8 @@
     "password": "kill",
     "twitter": "@mollymurder",
     "github": "mollymurder",
-    "avatarUrl": "gravatar.com/mm"
+    "avatarUrl": "gravatar.com/mm",
+    "verified": true
   },
   {
     "fName": "Puff",
@@ -15,7 +16,8 @@
     "password": "magic",
     "twitter": "@magicdragon",
     "github": "magicdragon",
-    "avatarUrl": "gravatar.com/magicdragon"
+    "avatarUrl": "gravatar.com/magicdragon",
+    "verified": true
   },
   {
     "fName": "Josefin",
