@@ -1,0 +1,18 @@
+{
+    "development" : {
+        "host": "localhost",
+        "port": 27017,
+        "database_name": "flasher_thingssdk_development"
+    },
+    "test" : {
+        "host": "localhost",
+        "port": 27017,
+        "database_name": "flasher_thingssdk_test"
+    },
+    "staging": {
+
+    },
+    "production": {
+
+    }
+}

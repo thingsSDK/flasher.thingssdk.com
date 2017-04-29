@@ -9,6 +9,7 @@ const usersRoutes = require('./routes/users');
 const auth = require('./routes/auth');
 const signup = require('./routes/signup');
 const userManagement = require('./routes/userManagement');
+const dbConnect = require('./database');
 
 const app = express();
 
@@ -16,12 +17,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Connect to DB
-const mongoose = require('mongoose');
-const uri = `mongodb://localhost:27017/flasher_thingssdk_development`; //${app.get('env')}`;
-mongoose.connect(uri);
-const db = mongoose.connection;
-db.on("error", err => console.error("connection error:", err));
+//Connects to the database
+dbConnect(app.get('env'));
 
 /* CORS */
 app.use(function(req, res, next){

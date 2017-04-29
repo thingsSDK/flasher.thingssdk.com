@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Manifest = require('../../models').Manifest;
 
-describe('Model', () => {
+xdescribe('Model', () => {
   describe('Manifest model', () => {
     beforeEach((done) => {Manifest.remove({}).then(() => done())});
     after(done => {Manifest.db.dropDatabase().then(() => done())});
