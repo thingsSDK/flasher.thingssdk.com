@@ -25,7 +25,8 @@
     "twitter": "@josefin",
     "isAdmin": true,
     "github": "josifin",
-    "avatarUrl": "gravatar.com/robot"
+    "avatarUrl": "gravatar.com/robot",
+    "verified": true
   },
   {
     "fName": "Harry",
