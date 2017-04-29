@@ -1,0 +1,167 @@
+[
+    {
+        "name": "Espruino",
+        "version": "1v85",
+        "board": "ESP8266",
+        "revision": "ESP-12",
+        "description": "Official Binaries for the Espruino Runtime for the ESP8266 MCU ESP-12",
+        "download": "http://www.espruino.com/files/espruino_1v85.zip",
+        "flash": {
+            "frequency": "80m",
+            "images": [
+                {
+                    "address": "0x0000",
+                    "path": "espruino_1v85_esp8266/boot_v1.4(b1).bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x1000",
+                    "path": "espruino_1v85_esp8266/espruino_esp8266_user1.bin",
+                    "sha": "two"
+                },
+                {
+                    "address": "0x3FC000",
+                    "path": "espruino_1v85_esp8266/esp_init_data_default.bin",
+                    "sha": "three"
+                },
+                {
+                    "address": "0x3FE000",
+                    "path": "espruino_1v85_esp8266/blank.bin",
+                    "sha": "four"
+                }
+            ]
+        }
+    },
+    {
+        "name": "Espruino",
+        "version": "1v86",
+        "board": "ESP8266",
+        "revision": "ESP-12",
+        "description": "Official Binaries for the Espruino Runtime for the ESP8266 MCU ESP-12",
+        "download": "http://www.espruino.com/files/espruino_1v86.zip",
+        "flash": {
+            "frequency": "80m",
+            "images": [
+                {
+                    "address": "0x0000",
+                    "path": "espruino_1v86_esp8266/boot_v1.4(b1).bin",
+                    "sha": "sha"
+                },
+                {
+                    "address": "0x1000",
+                    "path": "espruino_1v86_esp8266/espruino_esp8266_user1.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FC000",
+                    "path": "espruino_1v86_esp8266/esp_init_data_default.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FE000",
+                    "path": "espruino_1v86_esp8266/blank.bin",
+                    "sha": "one"
+                }
+            ]
+        }
+    },
+    {
+        "name": "Espruino",
+        "version": "1v87",
+        "board": "ESP8266",
+        "revision": "ESP-12",
+        "description": "Official Binaries for the Espruino Runtime for the ESP8266 MCU ESP-12",
+        "download": "http://www.espruino.com/files/espruino_1v87.zip",
+        "flash": {
+            "frequency": "80m",
+            "images": [
+                {
+                    "address": "0x0000",
+                    "path": "espruino_1v87_esp8266/boot_v1.4(b1).bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x1000",
+                    "path": "espruino_1v87_esp8266/espruino_esp8266_user1.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FC000",
+                    "path": "espruino_1v87_esp8266/esp_init_data_default.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FE000",
+                    "path": "espruino_1v87_esp8266/blank.bin",
+                    "sha": "one"
+                }
+            ]
+        }
+    },
+    {
+        "name": "Espruino",
+        "version": "1v88",
+        "board": "ESP8266",
+        "revision": "ESP-12",
+        "description": "Official Binaries for the Espruino Runtime for the ESP8266 MCU ESP-12",
+        "download": "http://www.espruino.com/files/espruino_1v88.zip",
+        "flash": {
+            "frequency": "80m",
+            "images": [
+                {
+                    "address": "0x0000",
+                    "path": "espruino_1v88_esp8266/boot_v1.6.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x1000",
+                    "path": "espruino_1v88_esp8266/espruino_esp8266_user1.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FC000",
+                    "path": "espruino_1v88_esp8266/esp_init_data_default.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x3FE000",
+                    "path": "espruino_1v88_esp8266/blank.bin",
+                    "sha": "one"
+                }
+            ]
+        }
+    },
+    {
+        "name": "Smart.js",
+        "version": "Beta 3 \"Fat Rabbit\", 2016-03-24",
+        "board": "ESP8266",
+        "revision": "ESP-12",
+        "description": "Official Binaries for the Smart.js Runtime for the ESP8266 MCU ESP-12",
+        "download": "https://github.com/cesanta/iot/releases/download/beta3/smartjs-esp8266-beta3.zip",
+        "flash": {
+            "frequency": "80m",
+            "images": [
+                {
+                    "address": "0x0000",
+                    "path": "smartjs-20160324150833/0x00000.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x1000",
+                    "path": "smartjs-20160324150833/0x01000.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0xdc000.bin",
+                    "path": "smartjs-20160324150833/0xdc000.bin",
+                    "sha": "one"
+                },
+                {
+                    "address": "0x11000",
+                    "path": "smartjs-20160324150833/0x11000.bin",
+                    "sha": "one"
+                }
+            ]
+        }
+    }
+]

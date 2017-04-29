@@ -6,25 +6,23 @@ const action = process.argv[3];
 const actions = {
   up: () => {
     const users = require('./dummy/users.json');
+    const manifests = require('./dummy/manifests.json');
     Promise.all(users.map(user => new User(user).save()))
     .then((users) => {
       users = users.reduce((result, user) => {
         result[user.fName] = user;
         return result;
       }, {});
-      return Promise.all([5,6,7,8].map(num => {
-        const man = require(`./flat/esp8266/esp12/espruino/manifest.1.8${num}.json`);
-        man.author = users.Josefin._id;
-        man.published = true;
+      return Promise.all(manifests.map((manifest, index, arr) => {
+        const man = new Manifest(manifest);
+        if (index < 3) {
+          man.author = users.Josefin._id;
+        } else {
+          man.author = users.Molly._id;
+        }
+        man.published = (index % 2 === 0);
         return new Manifest(man).save()
       }))
-      .then(() => users)
-    })
-    .then((users)=> {
-      const man = require('./flat/esp8266/esp12/smartjs/manifest.json');
-      man.author = users.Molly._id;
-      man.published = true;
-      return new Manifest(man).save()
     })
     .then(() => {
       process.stdout.write(`Database ${db} has been updated.\n`);
