@@ -14,11 +14,14 @@ const ManifestSchema = new Schema({
   description: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   download: { type: String, required: true },
-  flash: [{
+  flash: {
+    frequency: { type: String, required: false },
+    images: [{
       address: { type: String, required: true },
       path: { type: String, required: true },
       sha: {type: String, required: false}
-  }],
+    }]
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   published: { type: Boolean, default: false }
