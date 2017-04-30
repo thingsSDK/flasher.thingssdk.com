@@ -4,16 +4,19 @@ const jwt = require('jsonwebtoken');
 const User = require('../models').User;
 const secret = require('../config').auth.secret;
 
+const auth = require('basic-auth');
+const createStatusError = require('../utils/createStatusError');
+
+const unauthorizedError = createStatusError(401);
+const forbiddenError = createStatusError(403);
+
 router.use((req, res, next) => {
-  const cred = req.get('Authorization');
+  const cred = auth(req);
   if (!cred) {
-    const err = new Error('Authorization failed');
-    err.status = 401;
-    return next(err);
+    return next(unauthorizedError);
   }
-  const parsedCred = Buffer.from(cred, 'base64').toString().split(':');
-  req.un = parsedCred[0];
-  req.pw = parsedCred[1];
+  req.un = cred.name;
+  req.pw = cred.pass;
   next();
 });
 
@@ -25,11 +28,7 @@ router.get('/authorize', function(req, res, next) {
   .select('+password')
   .exec()
   .then(user => {
-    if (!user) {
-      const err = new Error('Forbidden');
-      err.status = 403;
-      return next(err);
-    }
+    if (!user) return next(forbiddenError);
     if (!user.verified) {
       const err = new Error('Unverified Account');
       err.status = 401;
@@ -37,11 +36,7 @@ router.get('/authorize', function(req, res, next) {
     }
     user.comparePassword(req.pw, (err, isMatch) =>{
       if (err) return next(err);
-      if (!isMatch) {
-        const err = new Error('Forbidden')
-        err.status = 403
-        return next(err)
-      }
+      if (!isMatch) return next(forbiddenError);
       const token = jwt.sign({ id: user._id, exp: Date.now() + 2 * 60 * 60 * 1000}, secret);
       res.json({access_token:token});
     })

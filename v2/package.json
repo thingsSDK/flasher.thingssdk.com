@@ -1,10 +1,10 @@
 {
-  "name": "v2",
-  "version": "0.0.0",
+  "name": "flasher-manifest-api",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive; exit 0",
+    "test": "mocha --recursive",
     "dbUp": "node setupDb.js flasher_thingssdk_development up",
     "dbDown": "node setupDb.js flasher_thingssdk_development down",
     "dbRefresh": "npm run dbDown && npm run dbUp"
@@ -16,7 +16,8 @@
     "express": "~4.13.1",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.6.8",
-    "morgan": "~1.6.1"
+    "morgan": "~1.6.1",
+    "basic-auth":"~1.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

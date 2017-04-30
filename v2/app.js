@@ -10,6 +10,9 @@ const auth = require('./routes/auth');
 const signup = require('./routes/signup');
 const userManagement = require('./routes/userManagement');
 const dbConnect = require('./database');
+const createStatusError = require('./utils/createStatusError');
+
+const notFoundError = createStatusError(404);
 
 const app = express();
 
@@ -41,9 +44,7 @@ app.use('/v2/users', usersRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  next(notFoundError);
 });
 
 // error handlers
