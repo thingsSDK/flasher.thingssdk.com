@@ -15,13 +15,16 @@ const createStatusError = require('./utils/createStatusError');
 const notFoundError = createStatusError(404);
 
 const app = express();
+const env = app.get('env');
 
-app.use(logger('dev'));
+// Disabled logging in test environment
+if(env !== 'test') app.use(logger(env));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //Connects to the database
-dbConnect(app.get('env'));
+dbConnect(env);
 
 /* CORS */
 app.use(function(req, res, next){

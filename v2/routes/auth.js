@@ -8,7 +8,7 @@ const auth = require('basic-auth');
 const createStatusError = require('../utils/createStatusError');
 
 const unauthorizedError = createStatusError(401);
-const forbiddenError = createStatusError(403);
+const unprocessibleEntityError = createStatusError(422);
 
 router.use((req, res, next) => {
   const cred = auth(req);
@@ -28,7 +28,7 @@ router.get('/authorize', function(req, res, next) {
   .select('+password')
   .exec()
   .then(user => {
-    if (!user) return next(forbiddenError);
+    if (!user) return next(unprocessibleEntityError);
     if (!user.verified) {
       const err = new Error('Unverified Account');
       err.status = 401;
@@ -36,7 +36,7 @@ router.get('/authorize', function(req, res, next) {
     }
     user.comparePassword(req.pw, (err, isMatch) =>{
       if (err) return next(err);
-      if (!isMatch) return next(forbiddenError);
+      if (!isMatch) return next(unprocessibleEntityError);
       const token = jwt.sign({ id: user._id, exp: Date.now() + 2 * 60 * 60 * 1000}, secret);
       res.json({access_token:token});
     })

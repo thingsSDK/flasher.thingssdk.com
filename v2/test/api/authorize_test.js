@@ -33,5 +33,19 @@ describe('/authorize', () =>  {
                 done(); 
         }); 
     }), 
+    it('should reject incorrect user credentials', done => {
+         request(app)
+            .get('/v2/authorize')
+            .auth('sasquac', 'watercolormemoir')
+            .expect('Content-Type', /json/)
+            .expect(422)
+            .end((err, res) =>  {
+                expect(err).to.be.null; 
+                const json = res.body;
+                expect(json.access_token).to.be.undefined;
+                expect(json.message).to.equal('Unprocessable Entity');
+                done(); 
+        }); 
+    });
     after(helper.tearDown); 
 }); 
