@@ -9,19 +9,22 @@ const usersRoutes = require('./routes/users');
 const auth = require('./routes/auth');
 const signup = require('./routes/signup');
 const userManagement = require('./routes/userManagement');
+const dbConnect = require('./database');
+const createStatusError = require('./utils/createStatusError');
+
+const notFoundError = createStatusError(404);
 
 const app = express();
+const env = app.get('env');
 
-app.use(logger('dev'));
+// Disabled logging in test environment
+if(env !== 'test') app.use(logger(env));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Connect to DB
-const mongoose = require('mongoose');
-const uri = `mongodb://localhost:27017/flasher_thingssdk_development`; //${app.get('env')}`;
-mongoose.connect(uri);
-const db = mongoose.connection;
-db.on("error", err => console.error("connection error:", err));
+//Connects to the database
+dbConnect(env);
 
 /* CORS */
 app.use(function(req, res, next){
@@ -44,9 +47,7 @@ app.use('/v2/users', usersRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  next(notFoundError);
 });
 
 // error handlers

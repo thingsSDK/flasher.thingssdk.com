@@ -13,7 +13,7 @@ const testUser = {
   avatarUrl: 'myspace.com/photos/clearing.png'
 };
 
-describe('Model', () => {
+xdescribe('Model', () => {
   describe('User model', () => {
     beforeEach((done) => {User.remove({}).then(()=>done())});
     after(done => {User.db.dropDatabase().then(() => done())});
