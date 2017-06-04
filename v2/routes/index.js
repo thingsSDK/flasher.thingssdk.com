@@ -55,7 +55,6 @@ router.get('/', function(req, res, next) {
   }
   const manifestQuery = Manifest.find({});
   if (req.authorizedUser && !req.authorizedUser.isAdmin) {
-    console.log(req.authorizedUser._id)
     manifestQuery.or([{published:true}, {author:req.authorizedUser._id}])
   } else if (!req.authorizedUser) {
     manifestQuery.where({ published: true })
@@ -117,7 +116,7 @@ router.post('/manifests', (req, res, next) => {
   new Manifest(req.body).save()
   .then(doc => {
     res.status(201);
-    res.json({id: doc._id});
+    res.json(doc);
   })
   .catch(err => next(err));
 });
@@ -125,6 +124,7 @@ router.post('/manifests', (req, res, next) => {
 /* Update a Manifest */
 router.put('/manifests/:id', (req, res, next) => {
   const manifest = req.manifest;
+  console.log('manifest', req.body)
   // Check authorization
   if (isAuthorized(req, true)) {
     if (!manifest.published) preserveUnpublished(req);
