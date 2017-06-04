@@ -116,7 +116,7 @@ router.post('/manifests', (req, res, next) => {
   new Manifest(req.body).save()
   .then(doc => {
     res.status(201);
-    res.json(doc);
+    res.json({ message: 'Success'});
   })
   .catch(err => next(err));
 });
@@ -131,7 +131,7 @@ router.put('/manifests/:id', (req, res, next) => {
     Object.assign(manifest, req.body);
     manifest.save()
     .then(doc => {
-      return res.json(doc);
+      return res.json({ message: 'Success'});
     })
     .catch(err => next(err));
   } else {
@@ -147,7 +147,7 @@ router.delete('/manifests/:id', (req, res, next) => {
   // Check authorization
   if (isAuthorized(req, true)) {
     Manifest.remove(req.manifest)
-    .then(doc => res.json({ id: doc._id }))
+    .then(doc => res.json({ message: 'Success'}))
     .catch(err => next(err));
   } else {
     const err = new Error('Unauthorized');
