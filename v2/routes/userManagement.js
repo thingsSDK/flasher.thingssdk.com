@@ -12,10 +12,8 @@ router.use((req, res, next) => {
 });
 
 router.get('/my-account', (req, res, next) => {
-  console.log('hit')
   const userObj = req.authorizedUser.toObject()
    const infoToSend = filterObj(['__v', '_id', 'password'], userObj)
-    console.log(infoToSend)
   return res.json(infoToSend);
 });
 

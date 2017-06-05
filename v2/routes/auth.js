@@ -10,7 +10,7 @@ const createStatusError = require('../utils/createStatusError');
 const unauthorizedError = createStatusError(401);
 const unprocessibleEntityError = createStatusError(422);
 
-router.use((req, res, next) => {
+router.use('/authorize', (req, res, next) => {
   const cred = auth(req);
   if (!cred) {
     return next(unauthorizedError);
