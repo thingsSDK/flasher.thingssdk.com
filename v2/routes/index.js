@@ -124,7 +124,6 @@ router.post('/manifests', (req, res, next) => {
 /* Update a Manifest */
 router.put('/manifests/:id', (req, res, next) => {
   const manifest = req.manifest;
-  console.log('manifest', req.body)
   // Check authorization
   if (isAuthorized(req, true)) {
     if (!manifest.published) preserveUnpublished(req);
