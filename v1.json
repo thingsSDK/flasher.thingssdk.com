@@ -1,14 +1,19 @@
 {
-    "options": [
-        {
+    "options": [{
             "name": "Espruino",
-            "versions": [
+            "versions": [{
+                    "version": "1v92",
+                    "board": "ESP8266",
+                    "revision": "ESP12",
+                    "manifest": "/v1/esp8266/esp12/espruino/manifest.1.92.json",
+                    "latest": true
+                },
                 {
                     "version": "1v91",
                     "board": "ESP8266",
                     "revision": "ESP12",
                     "manifest": "/v1/esp8266/esp12/espruino/manifest.1.91.json",
-                    "latest": true
+                    "latest": false
                 },
                 {
                     "version": "1v90",
@@ -56,15 +61,13 @@
         },
         {
             "name": "Smart.js",
-            "versions": [
-                {
-                    "version": "Beta 3 \"Fat Rabbit\", 2016-03-24",
-                    "board": "ESP8266",
-                    "revision": "ESP12",
-                    "manifest": "/v1/esp8266/esp12/smartjs/manifest.json",
-                    "latest": true
-                }
-            ]
+            "versions": [{
+                "version": "Beta 3 \"Fat Rabbit\", 2016-03-24",
+                "board": "ESP8266",
+                "revision": "ESP12",
+                "manifest": "/v1/esp8266/esp12/smartjs/manifest.json",
+                "latest": true
+            }]
         }
     ]
 }
