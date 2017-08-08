@@ -8,19 +8,19 @@
   "flash": [
     {
       "address": "0x0000",
-      "path": "espruino_1v93_esp8266/boot_v1.6.bin"
+      "path": "espruino_1v92_esp8266_4mb/boot_v1.6.bin"
     },
     {
       "address": "0x1000",
-      "path": "espruino_1v93_esp8266/espruino_esp8266_user1.bin"
+      "path": "espruino_1v92_esp8266_4mb/espruino_esp8266_user1.bin"
     },
     {
       "address": "0x3FC000",
-      "path": "espruino_1v93_esp8266/esp_init_data_default.bin"
+      "path": "espruino_1v92_esp8266_4mb/esp_init_data_default.bin"
     },
     {
-      "address": "0x37E000",
-      "path": "espruino_1v93_esp8266/blank.bin"
+      "address": "0x3FE000",
+      "path": "espruino_1v92_esp8266_4mb/blank.bin"
     }
   ]
 }
