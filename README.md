@@ -2,7 +2,7 @@
 
 ## Instructions
 ```
-git clone https://github.com/joelkraft/flasher.thingssdk.com.git
+git clone https://github.com/thingsSDK/flasher.thingssdk.com.git
 cd flasher.thingssdk.com
 git checkout dev
 cd v2
