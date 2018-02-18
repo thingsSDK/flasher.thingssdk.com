@@ -10,7 +10,7 @@ npm i
 ```
 or cut 'n' paste:
 
-`git clone https://github.com/joelkraft/flasher.thingssdk.com.git && cd flasher.thingssdk.com && git checkout dev && cd v2 && npm i`
+`git clone https://github.com/thingsSDK/flasher.thingssdk.com.git && cd flasher.thingssdk.com && git checkout dev && cd v2 && npm i`
 * Run tests with `npm test` (not all currently pass)
 * Set up the db and start the server with `npm run dbUp && nodemon`
 
