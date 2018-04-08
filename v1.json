@@ -7,7 +7,7 @@
                     "version": "1v93",
                     "board": "ESP8266",
                     "revision": "ESP12",
-                    "manifest": "/v1/esp8266/esp12/espruino/manifest.1.92.json",
+                    "manifest": "/v1/esp8266/esp12/espruino/manifest.1.93.json",
                     "latest": true
                 },
                 {
