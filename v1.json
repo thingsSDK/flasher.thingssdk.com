@@ -11,13 +11,6 @@
                     "latest": true
                 },
                 {
-                    "version": "1v92",
-                    "board": "ESP8266",
-                    "revision": "ESP12",
-                    "manifest": "/v1/esp8266/esp12/espruino/manifest.1.92.json",
-                    "latest": false
-                },
-                {
                     "version": "1v91",
                     "board": "ESP8266",
                     "revision": "ESP12",
