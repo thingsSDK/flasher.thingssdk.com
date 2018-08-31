@@ -4,6 +4,7 @@
   "description": "Flasher.js API",
   "main": "index.js",
   "scripts": {
+    "build": "node build.js",
     "start": "node index.js"
   },
   "repository": {
@@ -29,6 +30,8 @@
   "homepage": "https://github.com/thingsSDK/flasher.thingssdk.com#readme",
   "dependencies": {
     "cors": "^2.8.1",
-    "express": "^4.14.0"
+    "dotenv": "^6.0.0",
+    "express": "^4.14.0",
+    "fs-extra": "^7.0.0"
   }
 }
