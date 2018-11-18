@@ -23,9 +23,9 @@ v1_1_ManifestList.options = v1_ManifestList.options.concat(v1_1_ManifestList.opt
 app.use(cors());
 app.use(express.static('public'));
 
-app.get("/", (req,res) => res.redirect('http://thingssdk.com'));
+app.get("/", (req, res) => res.redirect('http://thingssdk.com'));
 app.get('/:api_version/manifest-list.json', (req, res) => {
-    const {api_version} = req.params;
+    const { api_version } = req.params;
     if (api_version === "v1") {
         res.json(v1_ManifestList);
     } else if (api_version === "v1.1") {
